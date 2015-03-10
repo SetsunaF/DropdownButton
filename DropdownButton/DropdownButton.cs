@@ -4,6 +4,9 @@ using System.Windows.Forms;
 
 namespace DropdownButton
 {
+    //Dropdown button based on FlatButton
+    //Adds an arrow next to the button to show a menu
+    //If arrow is hidden, the menu will be shown when button is clicked
     public class DropdownButton : FlatButton
     {
         readonly Button _arrowButton;

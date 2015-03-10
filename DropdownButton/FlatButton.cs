@@ -17,6 +17,7 @@ namespace DropdownButton
         Custom   //6
     }
 
+    //Simple flat button based on Button
     public class FlatButton : Button
     {
         private Styles _style;
@@ -35,6 +36,7 @@ namespace DropdownButton
             }
         }
 
+        //Color presets
         private readonly Color[] Colors =
         {
             Color.DarkGray,
