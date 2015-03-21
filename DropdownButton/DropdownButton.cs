@@ -10,13 +10,32 @@ namespace DropdownButton
     public class DropdownButton : FlatButton
     {
         readonly Button _arrowButton;
+
         ContextMenuStrip _dropdownMenu;
+        Form _infoDialog;
+
         bool _hideArrow;
 
         public ContextMenuStrip Menu
         {
             get { return _dropdownMenu; }
-            set { _dropdownMenu = value; }
+            set
+            {
+                _dropdownMenu = value;
+                _infoDialog = null;
+                _arrowButton.Image = Properties.Resources.arrow;
+            }
+        }
+
+        public Form Dialog
+        {
+            get { return _infoDialog; }
+            set
+            {
+                _dropdownMenu = null;
+                _infoDialog = value;
+                _arrowButton.Image = Properties.Resources.expand;
+            }
         }
 
         public bool HideArrow
@@ -43,12 +62,11 @@ namespace DropdownButton
 
         public DropdownButton()
         {
-            base.TextAlign = ContentAlignment.MiddleLeft;
+            base.TextAlign = ContentAlignment.MiddleLeft;                       
 
             _arrowButton = new FlatButton
             {
                 Width = 19,
-                Image = Properties.Resources.arrow,
                 ImageAlign = ContentAlignment.MiddleCenter
             };
 
@@ -69,17 +87,22 @@ namespace DropdownButton
         {
             //System.Windows.Forms.MessageBox.Show("Click");
 
-            if (_dropdownMenu == null) return;
-
-            Point screenPoint = PointToScreen(new Point(Left, Bottom));
-
-            if (screenPoint.Y + _dropdownMenu.Size.Height > Screen.PrimaryScreen.WorkingArea.Height)
+            if (_dropdownMenu != null)
             {
-                _dropdownMenu.Show(this, new Point(0, -(_dropdownMenu.Size.Height + 1)));
+                Point screenPoint = PointToScreen(new Point(Left, Bottom));
+
+                if (screenPoint.Y + _dropdownMenu.Size.Height > Screen.PrimaryScreen.WorkingArea.Height)
+                {
+                    _dropdownMenu.Show(this, new Point(0, -(_dropdownMenu.Size.Height + 1)));
+                }
+                else
+                {
+                    _dropdownMenu.Show(this, new Point(0, Height + 1));
+                }
             }
-            else
+            else if (_infoDialog != null)
             {
-                _dropdownMenu.Show(this, new Point(0, Height + 1));
+                _infoDialog.ShowDialog();
             }
         }
 
