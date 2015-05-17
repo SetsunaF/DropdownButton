@@ -106,5 +106,9 @@ namespace DropdownButton
             }
         }
 
+        public void Expand()
+        {
+            arrowButton_Click(null, null);
+        }
     }
 }
