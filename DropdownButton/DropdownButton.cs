@@ -13,6 +13,8 @@ namespace DropdownButton
 
         ContextMenuStrip _dropdownMenu;
         Form _infoDialog;
+        public delegate void onDialogClose();
+        public onDialogClose onDialogCloseEvent;
 
         bool _hideArrow;
 
@@ -103,6 +105,12 @@ namespace DropdownButton
             else if (_infoDialog != null)
             {
                 _infoDialog.ShowDialog();
+
+                if (onDialogCloseEvent != null)
+                {
+                    if(_infoDialog.DialogResult != DialogResult.Cancel)
+                        onDialogCloseEvent();
+                }
             }
         }
 
